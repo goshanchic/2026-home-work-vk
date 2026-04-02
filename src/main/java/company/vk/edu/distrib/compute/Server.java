@@ -7,17 +7,14 @@ import org.slf4j.Logger;
 
 public class Server {
 
-    public static void main(String[] args) throws IOException { // Стандартное объявление main
+    public static void main(String[] args) throws IOException {
         Logger log = LoggerFactory.getLogger("server");
         int port = 8080;
 
-        // Исправлено имя класса при создании объекта (убрана приставка 'goshanchic')
         KVService storage = new KVServiceFactoryImpl().create(port);
 
         storage.start();
         log.info("Server started on port {}", port);
-
-        // Корректное завершение работы сервера при выключении приложения
         Runtime.getRuntime().addShutdownHook(new Thread(storage::stop));
     }
 }
